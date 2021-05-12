@@ -122,7 +122,13 @@ func main() {
 		Name:    "templuxinator",
 		Usage:   "Templating similar to helm-chart, but for any files :)",
 		Version: "1.0.0", // --version | -v
-		Action:  app_action,
+		Authors: []*cli.Author{
+			&cli.Author{
+				Name:  "zipizap",
+				Email: "https://github.com/zipizap",
+			},
+		},
+		Action: app_action,
 		Flags: []cli.Flag{
 			// Global options flags
 			&cli.StringFlag{
@@ -153,6 +159,39 @@ func main() {
 	}
 	app.UseShortOptionHandling = true // let bool-shortnames to be joined: -a -b -c FILE => -abc FILE
 	app.EnableBashCompletion = true   // and then users must copy a file "bash_autocomplete" and setup shell with: PROG=myprogram source path/to/cli/autocomplete/bash_autocomplete
+
+	cli.AppHelpTemplate = `
+NAME:
+	{{.Name}} - {{.Usage}}
+
+USAGE:
+	{{.HelpName}} {{if .VisibleFlags}}[global options]{{end}}{{if .Commands}} command [command options]{{end}} {{if .ArgsUsage}}{{.ArgsUsage}}{{else}}[arguments...]{{end}}
+
+EXAMPLE:
+	{{.HelpName}} --template mytemplate.txt --values myvalues.yaml --output myresult.txt
+{{- /*
+{{if .Commands -}}
+COMMANDS:
+ {{range .Commands}}{{if not .HideHelp}}   {{join .Names ", "}}{{ "\t"}}{{.Usage}}{{ "\n" }}{{end}}{{end}}
+{{end -}}
+*/}}
+
+{{if .VisibleFlags -}}
+GLOBAL OPTIONS:
+	{{range .VisibleFlags -}}
+	{{.}}
+	{{end -}}
+{{end}}
+{{if len .Authors -}}
+AUTHOR:
+	{{range .Authors}}{{ . }}{{end}}
+{{- end }}
+{{if .Version -}}
+VERSION:
+	{{.Version}}
+{{- end }}
+
+`
 
 	err := app.Run(os.Args)
 	if err != nil {

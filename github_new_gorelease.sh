@@ -8,11 +8,22 @@ PS4='████████████████████████${B
 set -o errexit
 set -o pipefail
 set -o nounset
-#set -o xtrace
+set -o xtrace
+
+
 
 
 cd "${__dir}"
-export GO111MODULES=on
-CGO_ENABLED=0 GOOS=linux go build -a -ldflags '-extldflags "-static"' .
-#GOOS=windows go build .
-ls -lrth
+
+# #https://goreleaser.com/quick-start/
+# goreleaser init
+
+# Check GITHUB_TOKEN env-var
+(set +x; GITHUB_TOKEN="${GITHUB_TOKEN?missing env-var}")
+
+# Create tag
+git tag -a v1.0.0 -m "First release"
+git push origin v1.0.0
+
+goreleaser release
+
