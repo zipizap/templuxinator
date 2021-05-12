@@ -1,0 +1,12 @@
+Hi
+All the values are:
+{{.}}
+And we can use just some, like person2 name is {{.person2.name}}
+
+We can use any of the template [1] or sprig functions [2], like {{ "this sprig function!" | upper | repeat 2 }}
+
+[1] https://golang.org/pkg/text/template/#hdr-Functions
+[2] http://masterminds.github.io/sprig/
+
+
+end :)

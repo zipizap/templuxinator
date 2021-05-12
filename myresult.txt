@@ -1,0 +1,12 @@
+Hi
+All the values are:
+map[person1:map[age:42 name:Cosmo Kramer] person2:map[age:2 name:Terminator]]
+And we can use just some, like person2 name is Terminator
+
+We can use any of the template [1] or sprig functions [2], like THIS SPRIG FUNCTION!THIS SPRIG FUNCTION!
+
+[1] https://golang.org/pkg/text/template/#hdr-Functions
+[2] http://masterminds.github.io/sprig/
+
+
+end :)
